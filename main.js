@@ -22,21 +22,18 @@ var render = Render.create({
   }
 });
 
-let fat_bois = []
 // create the fat boi
-var fat_boi = Bodies.circle(window.innerWidth / 2, 0, 140, {
+var fat_boi = Bodies.circle(window.innerWidth / 200, window.innerHeight / 1.5, 140, {
   render: {
     sprite: {
       texture: "./fat_boi.png",
       xScale: 0.7,
-      yScale: 0.7
+      yScale: 0.7,
     }
-  }
+  },
 });
 
 fat_boi.friction = 1
-
-fat_bois.push(fat_boi)
 
 // set size
 render.canvas.height = window.innerHeight - window.innerHeight * 0.02;
@@ -76,7 +73,8 @@ var mouse = Mouse.create(render.canvas),
 World.add(engine.world, mouseConstraint);
 render.mouse = mouse;
 
-engine.world.gravity.x = 0
+engine.world.gravity.x = .6
+engine.world.gravity.y = 1
 
 // run the engine
 Engine.run(engine);
