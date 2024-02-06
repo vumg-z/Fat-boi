@@ -1,3 +1,10 @@
+// Add at the top with the other module aliases
+var Events = Matter.Events;
+
+// After creating the engine, renderer, and adding bodies to the world
+
+
+
 // module aliases
 var Engine = Matter.Engine,
   Render = Matter.Render,
@@ -75,6 +82,15 @@ render.mouse = mouse;
 
 engine.world.gravity.x = .6
 engine.world.gravity.y = 1
+
+// Listen for an engine update event to check the position of fat_boi
+Events.on(engine, 'afterUpdate', function() {
+  // Check if fat_boi is off the right side of the screen
+  if (fat_boi.position.x > window.innerWidth) {
+    // Reset fat_boi's position to the left side of the screen
+    Matter.Body.setPosition(fat_boi, { x: 0, y: fat_boi.position.y });
+  }
+});
 
 // run the engine
 Engine.run(engine);
