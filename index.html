@@ -1,11 +1,85 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fat Boi</title>
 </head>
+
 <body>
+
+    <style>
+		#verlologo {
+			font-size: 0.8em;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 90%;
+			height: 90px;
+			margin: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 10px;
+		}
+	</style>
+
+    <svg id="verlologo" width="549" height="133" viewBox="0 0 549 133" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path id="background" d="M548.031 0H0V132.284H548.031V0Z" fill="none" />
+        <path id="verlo"
+            d="M350.725 88.8189V43.4645H319.628V88.8189H350.725ZM366.274 93.1385C366.274 96.0899 365.254 98.6279 363.216 100.751C361.177 102.875 358.741 103.937 355.908 103.937H314.445C311.611 103.937 309.176 102.875 307.137 100.751C305.098 98.6279 304.079 96.0899 304.079 93.1385V39.1449C304.079 36.1935 305.098 33.6555 307.137 31.5322C309.176 29.4081 311.611 28.3464 314.445 28.3464H355.908C358.741 28.3464 361.177 29.4081 363.216 31.5322C365.254 33.6555 366.274 36.1935 366.274 39.1449V93.1385ZM297.859 103.937H251.214C248.38 103.937 245.944 102.875 243.905 100.751C241.867 98.6279 240.847 96.0899 240.847 93.1385V28.3464H256.396V88.8189H297.859V103.937ZM219.08 54.263V43.4645H187.982V54.263H219.08ZM234.628 103.937H219.08V69.3811H187.982V103.937H172.433V28.3464H224.262C227.096 28.3464 229.531 29.4081 231.57 31.5322C233.609 33.6555 234.628 36.1935 234.628 39.1449V51.0236C234.628 53.975 233.609 56.513 231.57 58.6363C229.531 60.7604 227.096 61.8221 224.262 61.8221C227.096 61.8221 229.531 62.8837 231.57 65.0078C233.609 67.1316 234.628 69.6691 234.628 72.6209V103.937ZM166.214 103.937H119.568C116.735 103.937 114.299 102.875 112.26 100.751C110.221 98.6279 109.202 96.0899 109.202 93.1385V39.1449C109.202 36.1935 110.221 33.6555 112.26 31.5322C114.299 29.4081 116.735 28.3464 119.568 28.3464H166.214V43.4645H124.75V54.263H166.214V69.3811H124.75V88.8189H166.214V103.937ZM106.092 28.3464L77.068 103.937H57.3729L28.3488 28.3464H46.057L67.2722 83.8514L88.4705 28.3464H106.092Z"
+            fill="#1F1A17" />
+        <path id=".co"
+            d="M388.04 103.937H372.491V88.8189H388.04V103.937ZM451.272 103.937H404.626C401.792 103.937 399.356 102.875 397.318 100.751C395.279 98.6279 394.26 96.0899 394.26 93.1385V39.1449C394.26 36.1935 395.279 33.6555 397.318 31.5322C399.356 29.4081 401.792 28.3464 404.626 28.3464H451.272V43.4645H409.809V88.8189H451.272V103.937ZM519.686 93.1385C519.686 96.0899 518.667 98.6279 516.628 100.751C514.59 102.875 512.153 103.937 509.32 103.937H467.857C465.024 103.937 462.588 102.875 460.549 100.751C458.51 98.6279 457.491 96.0899 457.491 93.1385V39.1449C457.491 36.1935 458.51 33.6555 460.549 31.5322C462.588 29.4081 465.024 28.3464 467.857 28.3464H509.32C512.153 28.3464 514.59 29.4081 516.628 31.5322C518.667 33.6555 519.686 36.1935 519.686 39.1449V93.1385ZM504.137 88.8189V43.4645H473.04V88.8189H504.137Z"
+            fill="#1F1A17" />
+    </svg>
+
+    <script>
+        // Fetch the color sets from the JSON file
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            document.body.style.cursor = 'default';
+        }
+
+        let isPaused = false; // Variable to track the pause state
+
+        // Function to toggle the pause state on window click
+        window.onclick = function () {
+            isPaused = !isPaused; // Toggle the pause state
+        }
+
+        fetch('colors.json')
+            .then(response => response.json())
+            .then(data => {
+                let colorIndex = 0;
+
+                // Function to apply a color set to the SVG elements
+                function applyColorSet(colorSet) {
+                    const background = document.getElementById('background');
+                    const verlo = document.getElementById('verlo');
+                    const co = document.getElementById('.co');
+
+                    background.style.fill = colorSet.background;
+                    verlo.style.fill = colorSet.verlo;
+                    co.style.fill = colorSet[".co"];
+                }
+
+                // Apply the first color set
+                applyColorSet(data[colorIndex]);
+
+                // Change the color set every 200 milliseconds if not paused
+                setInterval(() => {
+                    if (!isPaused) { // Only change colors if not paused
+                        colorIndex = (colorIndex + 1) % data.length;
+                        applyColorSet(data[colorIndex]);
+                    }
+                }, 200);
+            });
+    </script>
     <script src="matter.js" type="text/javascript"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
